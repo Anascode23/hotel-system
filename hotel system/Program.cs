@@ -1,3 +1,8 @@
+using hotel_system.Data;
+using hotel_system.RepositoryPattern.Implementations;
+using hotel_system.RepositoryPattern.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<HotelDbcontext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Hotel-system")));
+
+
+builder.Services.AddScoped<IGuest, GuestRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
